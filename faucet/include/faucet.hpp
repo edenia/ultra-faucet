@@ -10,8 +10,8 @@ using namespace eosio;
 
 namespace faucets {
   const int64_t TOKENS_PER_REQUEST = 500;
-  const int64_t TOKEN_PRECISION = 4;
-  const std::string TOKEN_SYMBOL = "EOS";
+  const int64_t TOKEN_PRECISION = 8;
+  const std::string TOKEN_SYMBOL = "UOS";
 
   struct faucet {
     name account;
