@@ -62,7 +62,7 @@ namespace faucets {
       permission_level {get_self(), "transferer"_n},
       "eosio.token"_n,
       "transfer"_n,
-      std::make_tuple(get_self(), to, TOKENS_PER_REQUEST, memo)
+      std::make_tuple(get_self(), to, amount, memo)
     ).send();
   }
 } // namespace faucets
