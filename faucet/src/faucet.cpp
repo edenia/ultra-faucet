@@ -1,4 +1,5 @@
 #include <eosio/system.hpp>
+#include <cmath>
 
 #include "../include/faucet.hpp"
 
@@ -55,7 +56,7 @@ namespace faucets {
       row.transferred_tokens = faucet_itr->transferred_tokens + TOKENS_PER_REQUEST;
     });
 
-    asset amount = asset(TOKENS_PER_REQUEST, symbol(TOKEN_SYMBOL, TOKEN_PRECISION));
+    asset amount = asset(TOKENS_PER_REQUEST * pow(10, TOKEN_PRECISION), symbol(TOKEN_SYMBOL, TOKEN_PRECISION));
     string memo = "Faucet transfer";
 
     eosio::action(
