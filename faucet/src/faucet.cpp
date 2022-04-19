@@ -50,7 +50,7 @@ namespace faucets {
     check(
       current_time_point() - faucet_itr->started_at <= 
         seconds(faucet_itr->interval.sec_since_epoch()) &&
-      faucet_itr->transferred_tokens < faucet_itr->max_tokens_per_interval, "Not so fast...");
+      faucet_itr->transferred_tokens + TOKENS_PER_REQUEST <= faucet_itr->max_tokens_per_interval, "Not so fast...");
 
     _faucet.modify(faucet_itr, get_self(), [&]( auto& row ) {
       row.transferred_tokens = faucet_itr->transferred_tokens + TOKENS_PER_REQUEST;
