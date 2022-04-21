@@ -17,7 +17,7 @@ namespace faucets {
     name account;
     eosio::time_point_sec interval;
     uint32_t max_tokens_per_interval;
-    eosio::time_point started_at;
+    eosio::time_point until;
     uint32_t transferred_tokens;
 
     uint64_t primary_key() const { return account.value; }
@@ -27,7 +27,7 @@ namespace faucets {
     account,
     interval,
     max_tokens_per_interval,
-    started_at,
+    until,
     transferred_tokens
   )
   typedef eosio::multi_index<"faucets"_n, faucet> faucet_table;
