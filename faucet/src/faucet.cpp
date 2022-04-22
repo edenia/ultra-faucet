@@ -16,7 +16,7 @@ namespace faucets {
       row.account = account;
       row.interval = interval;
       row.max_tokens_per_interval = max_tokens_per_interval;
-      row.started_at = current_time_point();
+      row.until = current_time_point() + seconds(interval.sec_since_epoch());
       row.transferred_tokens = 0;
     });
   }
@@ -40,16 +40,20 @@ namespace faucets {
 
     check(faucet_itr != _faucet.end(), "Faucet does not exist");
 
-    if(current_time_point() - faucet_itr->started_at >= seconds(faucet_itr->interval.sec_since_epoch())) {
+    time_point now = current_time_point();
+    if(now > faucet_itr->until) {
+      uint32_t intervalSecs = faucet_itr->interval.sec_since_epoch();
+      float windowGap = (now.sec_since_epoch() - faucet_itr->until.sec_since_epoch()) / intervalSecs;
+      
+      time_point newUntil = faucet_itr->until + seconds(intervalSecs) + time_point(seconds(floor(windowGap) * intervalSecs));
+
       _faucet.modify(faucet_itr, get_self(), [&]( auto& row ) {
-        row.started_at = current_time_point();
+        row.until = newUntil;
         row.transferred_tokens = 0;
       });
     }
 
-    check(
-      current_time_point() - faucet_itr->started_at <= 
-        seconds(faucet_itr->interval.sec_since_epoch()) &&
+    check( now <= faucet_itr->until &&
       faucet_itr->transferred_tokens + TOKENS_PER_REQUEST <= faucet_itr->max_tokens_per_interval, "Not so fast...");
 
     _faucet.modify(faucet_itr, get_self(), [&]( auto& row ) {

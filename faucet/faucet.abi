@@ -61,7 +61,7 @@
                     "type": "uint32"
                 },
                 {
-                    "name": "started_at",
+                    "name": "until",
                     "type": "time_point"
                 },
                 {
