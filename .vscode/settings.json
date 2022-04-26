@@ -1,0 +1,20 @@
+{
+  "editor.tabSize": 2,
+  "editor.renderWhitespace": "all",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.formatOnSave": true
+  },
+  "[json]": {
+    "editor.formatOnSave": true
+  },
+  "search.exclude": {
+    "**/.yarn": true,
+    "**/.pnp.*": true
+  },
+  "prettier.prettierPath": "./webapp/.yarn/sdks/prettier/index.js",
+  "cSpell.enabled": true,
+  "cSpell.enableFiletypes": [
+    "markdown"
+  ]
+}
